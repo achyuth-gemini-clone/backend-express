@@ -39,6 +39,21 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
 
+      - name: Update Lambda Environment variables
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws lambda update-function-configuration \
+            --function-name express \
+            --environment "Variables={ \
+            IMAGE_KIT_ENDPOINT_URL=${{ secrets.IMAGE_KIT_ENDPOINT_URL }}, \
+            IMAGE_KIT_PUBLIC_KEY=${{ secrets.IMAGE_KIT_PUBLIC_KEY }}, \
+            IMAGE_KIT_PRIVATE_KEY=${{ secrets.IMAGE_KIT_PRIVATE_KEY }}, \
+            REACT_CLIENT_URL=${{ secrets.REACT_CLIENT_URL }} \
+            }"
+
   update-layer:
     needs: deploy
     runs-on: ubuntu-latest

@@ -14,9 +14,9 @@ const PORT = process.env.PORT || 3000;
 //   res.status(200).send({ Message: "Working perfectly in AWS Lambda" });
 // });
 
-// app.listen(PORT, () => {
-//   console.log("Server running on 3000");
-// });
+app.listen(PORT, () => {
+  console.log("Server running on 3000");
+});
 
 // module.exports.handler = serverless(app);
 
