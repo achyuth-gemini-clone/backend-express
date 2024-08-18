@@ -1,4 +1,4 @@
-name: Deploy Vite React App to S3
+name: Deploy Gemini Backend to Lambda
 
 on:
   push:
