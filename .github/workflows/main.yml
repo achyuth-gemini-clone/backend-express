@@ -46,6 +46,9 @@ jobs:
             REACT_CLIENT_URL=${{ secrets.REACT_CLIENT_URL }} \
             }"
 
+      - name: Wait for 15 seconds for Lambda to update
+        run: sleep 15
+
       - name: Deploy Lambda Function
         run: |
           aws lambda update-function-code --function-name express --zip-file fileb://function.zip
