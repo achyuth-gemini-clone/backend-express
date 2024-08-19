@@ -43,8 +43,8 @@ jobs:
             IMAGE_KIT_ENDPOINT_URL=${{ secrets.IMAGE_KIT_ENDPOINT_URL }}, \
             IMAGE_KIT_PUBLIC_KEY=${{ secrets.IMAGE_KIT_PUBLIC_KEY }}, \
             IMAGE_KIT_PRIVATE_KEY=${{ secrets.IMAGE_KIT_PRIVATE_KEY }}, \
-            REACT_CLIENT_URL=${{ secrets.REACT_CLIENT_URL }} \
-            ENVIRONMENT=${{ secrets.ENVIRONMENT }} \
+            REACT_CLIENT_URL=${{ secrets.REACT_CLIENT_URL }}, \
+            ENVIRONMENT=${{ secrets.ENVIRONMENT }}, \
             MONGODB_URL=${{secrets.MONGODB_URL}}
             }"
 
