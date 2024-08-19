@@ -1,6 +1,11 @@
 import express from "express";
 import { imageKitRouter } from "./routes/imagekit_routes.js";
 import cors from "cors";
+import connectToDB from "./middleware/dbConnect.js";
+import { testRouter } from "./routes/health.js";
+import { chatRouter } from "./routes/chat.js";
+import { errorHandler } from "./middleware/error_handler.js";
+import UrlNotFoundError from "./exceptions/UrlNotFound.js";
 
 const app = express();
 
@@ -27,18 +32,32 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(connectToDB);
+
+app.use(testRouter);
+
+app.use(chatRouter);
+
 app.use(imageKitRouter);
 
-app.get("/test", (req, res) => {
-  res.status(200).send({ Message: "Working perfectly" });
+app.all("*", (req) => {
+  throw new UrlNotFoundError(`URL Not Found: ${req.url}`);
 });
 
-app.get("/test2", (req, res) => {
-  res.status(200).send({ Message: "Working perfectly 2" });
-});
+app.use(errorHandler);
 
-app.get("/", (req, res) => {
-  res.status(200).send({ Message: "Working perfectly in AWS Lambda" });
-});
+// Middlewares
+
+// app.get("/test", (req, res) => {
+//   res.status(200).send({ Message: "Working perfectly" });
+// });
+
+// app.get("/test2", (req, res) => {
+//   res.status(200).send({ Message: "Working perfectly 2" });
+// });
+
+// app.get("/", (req, res) => {
+//   res.status(200).send({ Message: "Working perfectly in AWS Lambda" });
+// });
 
 export { app };
