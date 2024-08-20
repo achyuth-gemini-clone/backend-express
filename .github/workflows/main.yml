@@ -100,7 +100,7 @@ jobs:
       - name: Update Lambda Layer
         run: |
           LAYER_ARN=$(aws lambda list-layer-versions --layer-name my_layer --query 'LayerVersions[0].LayerVersionArn' --output text)
-          aws lambda update-function-configuration --function-name express --layers $LAYER_ARN
+          aws lambda update-function-configuration --function-name express --layers $LAYER_ARN > /dev/null 2>&1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
