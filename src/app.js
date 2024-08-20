@@ -6,6 +6,7 @@ import { testRouter } from "./routes/health.js";
 import { chatRouter } from "./routes/chat.js";
 import { errorHandler } from "./middleware/error_handler.js";
 import UrlNotFoundError from "./exceptions/UrlNotFound.js";
+import "express-async-errors";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: process.env.REACT_CLIENT_URL,
+    credentials: true,
   })
 );
 
@@ -23,14 +25,14 @@ app.use(
 //   privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
 // });
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 app.use(connectToDB);
 

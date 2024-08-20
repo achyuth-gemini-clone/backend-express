@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const chatSchema = new Schema(
+const chatSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
@@ -10,7 +10,7 @@ const chatSchema = new Schema(
       {
         role: {
           type: String,
-          enum: ["user" | "model"],
+          enum: ["user", "model"],
           required: true,
         },
         parts: [

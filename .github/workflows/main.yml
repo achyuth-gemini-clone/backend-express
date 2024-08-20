@@ -45,7 +45,9 @@ jobs:
             IMAGE_KIT_PRIVATE_KEY=${{ secrets.IMAGE_KIT_PRIVATE_KEY }}, \
             REACT_CLIENT_URL=${{ secrets.REACT_CLIENT_URL }}, \
             ENVIRONMENT=${{ secrets.ENVIRONMENT }}, \
-            MONGODB_URL=${{secrets.MONGODB_URL}}
+            MONGODB_URL=${{secrets.MONGODB_URL}}, \
+            CLERK_PUBLISHABLE_KEY=${{secrets.CLERK_PUBLISHABLE_KEY}}, \
+            CLERK_SECRET_KEY=${{secrets.CLERK_SECRET_KEY}}
             }"
 
       - name: Wait for 5 seconds for Lambda to update
