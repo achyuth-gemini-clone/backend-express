@@ -12,12 +12,14 @@ const app = express();
 
 app.use(express.json());
 
-// app.use(
-//   cors({
-//     origin: process.env.REACT_CLIENT_URL,
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: process.env.REACT_CLIENT_URL,
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
 // const imagekit = new ImageKit({
 //   urlEndpoint: process.env.IMAGE_KIT_ENDPOINT_URL,
@@ -25,32 +27,32 @@ app.use(express.json());
 //   privateKey: process.env.IMAGE_KIT_PRIVATE_KEY,
 // });
 
-app.use(function (req, res, next) {
-  var allowedDomains = ["http://localhost:5173", process.env.REACT_CLIENT_URL];
-  var origin = req.headers.origin;
-  if (allowedDomains.indexOf(origin) > -1) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
+// app.use(function (req, res, next) {
+//   var allowedDomains = ["http://localhost:5173", process.env.REACT_CLIENT_URL];
+//   var origin = req.headers.origin;
+//   if (allowedDomains.indexOf(origin) > -1) {
+//     res.setHeader("Access-Control-Allow-Origin", origin);
+//   }
 
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type, Accept"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "X-Requested-With,content-type, Accept"
+//   );
+//   res.setHeader("Access-Control-Allow-Credentials", true);
 
-  next();
+//   next();
 
-  // res.header("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
-  // res.header(
-  //   "Access-Control-Allow-Headers",
-  //   "Origin, X-Requested-With, Content-Type, Accept"
-  // );
-  // next();
-});
+//   // res.header("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
+//   // res.header(
+//   //   "Access-Control-Allow-Headers",
+//   //   "Origin, X-Requested-With, Content-Type, Accept"
+//   // );
+//   // next();
+// });
 
 app.use(connectToDB);
 
