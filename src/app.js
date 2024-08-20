@@ -60,11 +60,11 @@ app.use(connectToDB);
 
 app.use(setSameSiteNone);
 
-app.use(testRouter);
+app.use("/api", testRouter);
 
-app.use(chatRouter);
+app.use("/api", chatRouter);
 
-app.use(imageKitRouter);
+app.use("/api", imageKitRouter);
 
 app.all("*", (req) => {
   throw new UrlNotFoundError(`URL Not Found: ${req.url}`);
