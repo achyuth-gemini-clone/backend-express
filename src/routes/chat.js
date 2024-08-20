@@ -11,9 +11,6 @@ chatRouter.post("/chat", ClerkExpressRequireAuth(), async (req, res) => {
 
   const { text } = req.body;
 
-  console.log("Inside New Chat");
-  console.log(req.body);
-
   const chatService = new ChatService();
 
   const id = await chatService.setNewChat({ userId, text });
@@ -52,10 +49,6 @@ chatRouter.put("/chat/:id", ClerkExpressRequireAuth(), async (req, res) => {
   const { id } = req.params;
   const { userId } = req.auth;
   const { question, answer, img } = req.body;
-
-  console.log("Inside Chat put router");
-  console.log(req.body);
-
   const newItems = [
     ...(question
       ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
@@ -66,8 +59,6 @@ chatRouter.put("/chat/:id", ClerkExpressRequireAuth(), async (req, res) => {
   const chatService = new ChatService();
 
   const updatedChat = await chatService.updateChat(id, userId, newItems);
-
-  console.log(updatedChat);
 
   res.status(200).send(updatedChat);
 });
