@@ -7,6 +7,7 @@ import { chatRouter } from "./routes/chat.js";
 import { errorHandler } from "./middleware/error_handler.js";
 import UrlNotFoundError from "./exceptions/UrlNotFound.js";
 import "express-async-errors";
+import { setSameSiteNone } from "./middleware/same_site_none.js";
 
 const app = express();
 
@@ -55,6 +56,8 @@ app.use(
 // });
 
 app.use(connectToDB);
+
+app.use(setSameSiteNone);
 
 app.use(testRouter);
 
