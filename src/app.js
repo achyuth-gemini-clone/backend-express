@@ -8,11 +8,12 @@ import { errorHandler } from "./middleware/error_handler.js";
 import UrlNotFoundError from "./exceptions/UrlNotFound.js";
 import "express-async-errors";
 import { setSameSiteNone } from "./middleware/same_site_none.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.REACT_CLIENT_URL,
