@@ -1,7 +1,7 @@
 const setSameSiteNone = (req, res, next) => {
   const originalCookie = res.cookies;
 
-  if (process.env.ENVIRONMENT == PROD) {
+  if (process.env.ENVIRONMENT == "PROD") {
     res.cookie = (...args) => {
       const [name, value, options = {}] = args;
 
