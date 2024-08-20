@@ -10,7 +10,6 @@ const imagekit = new ImageKit({
 });
 
 imageKitRouter.get("/auth", (req, res) => {
-  console.log("Inside auth route");
   let result = imagekit.getAuthenticationParameters();
   res.send(result);
 });
