@@ -45,4 +45,22 @@ chatRouter.get("/chat/:id", ClerkExpressRequireAuth(), async (req, res) => {
   res.status(200).send(chat);
 });
 
+chatRouter.put("/chat/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.auth;
+  const { question, answer, img } = req.body;
+  const newItems = [
+    ...(question
+      ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
+      : []),
+    { role: "model", parts: [{ text: answer }] },
+  ];
+
+  const chatService = new ChatService();
+
+  const updatedChat = await chatService.updateChat(id, userId, newItems);
+
+  res.status(200).send(updatedChat);
+});
+
 export { chatRouter };

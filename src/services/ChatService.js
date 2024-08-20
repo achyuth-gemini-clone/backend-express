@@ -48,6 +48,21 @@ class ChatService {
     }
   }
 
+  async updateChat(id, userId, newItems) {
+    const updateTheChat = await Chat.updateOne(
+      { _id: id, userId },
+      {
+        $push: {
+          history: {
+            $each: newItems,
+          },
+        },
+      }
+    );
+
+    return updateTheChat;
+  }
+
   async checkUserChats(userId) {
     const userChats = await UserChat.find({ userId: userId });
     return userChats;
