@@ -2,7 +2,7 @@ import { Router } from "express";
 import ChatService from "../services/ChatService.js";
 import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 import UserChatService from "../services/UserChatService.js";
-import { setSameSiteNone } from "../middleware/same_site_none.js";
+// import { setSameSiteNone } from "../middleware/same_site_none.js";
 
 const chatRouter = Router();
 

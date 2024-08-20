@@ -7,13 +7,10 @@ import { chatRouter } from "./routes/chat.js";
 import { errorHandler } from "./middleware/error_handler.js";
 import UrlNotFoundError from "./exceptions/UrlNotFound.js";
 import "express-async-errors";
-import { setSameSiteNone } from "./middleware/same_site_none.js";
-import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.REACT_CLIENT_URL,
@@ -30,35 +27,22 @@ app.use(
 // });
 
 // app.use(function (req, res, next) {
-//   var allowedDomains = ["http://localhost:5173", process.env.REACT_CLIENT_URL];
-//   var origin = req.headers.origin;
-//   if (allowedDomains.indexOf(origin) > -1) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//   );
-//   res.setHeader(
+//   res.header("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header(
 //     "Access-Control-Allow-Headers",
-//     "X-Requested-With,content-type, Accept"
+//     "Origin, X-Requested-With, Content-Type, Accept"
 //   );
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-
+//   res.append("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
+//   res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+//   res.append("Access-Control-Allow-Headers", "Content-Type");
+//   res.append("Access-Control-Allow-Credentials", "true");
 //   next();
-
-//   // res.header("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
-//   // res.header(
-//   //   "Access-Control-Allow-Headers",
-//   //   "Origin, X-Requested-With, Content-Type, Accept"
-//   // );
-//   // next();
 // });
 
 app.use(connectToDB);
 
-app.use(setSameSiteNone);
+// app.use(setSameSiteNone);
 
 app.use(testRouter);
 
