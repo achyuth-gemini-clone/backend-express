@@ -6,68 +6,43 @@ import { setSameSiteNone } from "../middleware/same_site_none.js";
 
 const chatRouter = Router();
 
-chatRouter.post(
-  "/chat",
-  ClerkExpressRequireAuth(),
-  setSameSiteNone,
-  async (req, res) => {
-    const { userId } = req.auth;
+chatRouter.post("/chat", ClerkExpressRequireAuth(), async (req, res) => {
+  const { userId } = req.auth;
 
-    const { text } = req.body;
+  const { text } = req.body;
 
-    console.log(req.body);
+  const chatService = new ChatService();
 
-    const chatService = new ChatService();
+  const id = await chatService.setNewChat({ userId, text });
 
-    const id = await chatService.setNewChat({ userId, text });
+  res.status(200).send(id);
+});
 
-    console.log(id);
+chatRouter.get("/userchats", ClerkExpressRequireAuth(), async (req, res) => {
+  const { userId } = req.auth;
 
-    res.status(200).send(id);
-  }
-);
+  const userChatService = new UserChatService();
 
-chatRouter.get(
-  "/userchats",
-  ClerkExpressRequireAuth(),
-  setSameSiteNone,
-  async (req, res) => {
-    const { userId } = req.auth;
+  const userChats = await userChatService.fetchUserChatsById(userId);
 
-    const userChatService = new UserChatService();
-
-    const userChats = await userChatService.fetchUserChatsById(userId);
-
-    if (userChats.length === 0) {
-      res.status(200).send([]);
-    } else res.status(200).send(userChats[0].chats);
-  }
-);
+  if (userChats.length === 0) {
+    res.status(200).send([]);
+  } else res.status(200).send(userChats[0].chats);
+});
 
 chatRouter.get("/chat/test", ClerkExpressRequireAuth(), async (req, res) => {
   res.send([{ Message: "Yoohoo!!" }]);
 });
 
-chatRouter.get(
-  "/chat/:id",
-  ClerkExpressRequireAuth(),
-  setSameSiteNone,
-  async (req, res) => {
-    const { id } = req.params;
-    const { userId } = req.auth;
+chatRouter.get("/chat/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.auth;
 
-    const chatService = new ChatService();
+  const chatService = new ChatService();
 
-    const chat = await chatService.fetchChatByChatIdAndUserId(id, userId);
+  const chat = await chatService.fetchChatByChatIdAndUserId(id, userId);
 
-    res.status(200).send(chat);
-  }
-);
-
-// chatRouter.get("/chat/test", ClerkExpressRequireAuth(), async (req, res) => {
-//   const userId = req.auth.userId;
-
-//   res.send(userId);
-// });
+  res.status(200).send(chat);
+});
 
 export { chatRouter };
