@@ -38,8 +38,6 @@ chatRouter.get(
 
     const userChats = await userChatService.fetchUserChatsById(userId);
 
-    console.log(userChats);
-
     if (userChats.length === 0) {
       res.status(200).send([]);
     } else res.status(200).send(userChats[0].chats);

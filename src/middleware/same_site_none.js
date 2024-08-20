@@ -1,8 +1,11 @@
 const setSameSiteNone = (req, res, next) => {
-  const originalCookie = res.cookies;
+  const originalCookie = req.cookies;
+
+  console.log("Inside Cookies Middleware");
+  console.log(originalCookie);
 
   if (process.env.ENVIRONMENT == "PROD") {
-    res.cookie = (...args) => {
+    req.cookie = (...args) => {
       const [name, value, options = {}] = args;
 
       // Ensure sameSite is set to 'None' if not already specified
@@ -10,7 +13,7 @@ const setSameSiteNone = (req, res, next) => {
       options.secure = options.secure !== undefined ? options.secure : true; // Ensure secure attribute
       options.domain = "achyuthvarmap.com";
 
-      originalCookie.call(res, name, value, options);
+      originalCookie.call(req, name, value, options);
     };
   }
 
